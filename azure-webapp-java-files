@@ -1,0 +1,196 @@
+// src/main/java/com/example/azurewebapp/AzureWebappApplication.java
+package com.example.azurewebapp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+// Supprimez les imports @RestController et ResponseEntity si non utilisés dans cette classe.
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.RestController;
+// import org.springframework.http.ResponseEntity;
+
+/**
+ * Classe principale de l'application Spring Boot.
+ * C'est le point d'entrée de notre application web.
+ */
+@SpringBootApplication
+public class AzureWebappApplication {
+
+    public static void main(String[] args) {
+        // Lance l'application Spring Boot
+        SpringApplication.run(AzureWebappApplication.class, args);
+    }
+}
+
+// src/main/java/com/example/azurewebapp/HelloController.java
+package com.example.azurewebapp;
+
+import org.springframework.stereotype.Controller; // Changez @RestController à @Controller
+import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.http.ResponseEntity; // N'est plus nécessaire si nous retournons une vue
+
+/**
+ * Contrôleur pour gérer les requêtes HTTP et retourner des vues (pages HTML).
+ * Il expose un endpoint "/" pour la page d'accueil.
+ */
+@Controller // Utilise @Controller pour retourner des vues
+public class HelloController {
+
+    /**
+     * Gère les requêtes GET sur l'endpoint "/".
+     * Retourne le nom du template HTML à afficher.
+     * Le fichier HTML doit être placé dans 'src/main/resources/templates/'.
+     * @return Le nom du template Thymeleaf (sans l'extension .html).
+     */
+    @GetMapping("/") // Définition de l'endpoint racine
+    public String home() {
+        return "home"; // Ceci correspondra à 'src/main/resources/templates/home.html'
+    }
+}
+
+/*
+ * Le fichier `pom.xml` est le fichier de configuration de Maven.
+ * Il définit les dépendances et la manière de construire le projet.
+ * Vous devriez le placer à la racine de votre projet Spring Boot.
+ *
+ * NOTE: Vous devez ajouter la dépendance 'spring-boot-starter-thymeleaf' pour que les templates HTML fonctionnent.
+ */
+/*
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.18</version> <!-- Version compatible avec Java 11 -->
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.example</groupId>
+    <artifactId>azure-webapp</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>azure-webapp</name>
+    <description>Demo project for Spring Boot on Azure Web Apps with Java 11</description>
+
+    <properties>
+        <java.version>11</java.version> <!-- Spécifie la version de Java 11 -->
+    </properties>
+
+    <dependencies>
+        <!-- Dépendance pour les applications web Spring Boot (inclut Tomcat intégré) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- NOUVEAU : Dépendance pour le moteur de templates Thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- Dépendance pour les tests Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Plugin Spring Boot pour construire une JAR exécutable -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+*/
+
+// src/main/resources/templates/home.html
+/*
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Azure!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif; /* Utilisation de la police Poppins */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            /* Nouveau fond dégradé doux */
+            background: linear-gradient(135deg, #e0f2f7 0%, #c8e6c9 100%);
+            color: #2c3e50; /* Couleur de texte plus foncée */
+            text-align: center;
+            overflow: hidden; /* Empêche le scroll si le contenu ne dépasse pas */
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 50px 70px; /* Augmentation du padding */
+            border-radius: 15px; /* Rayon de bordure légèrement plus grand */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Ombre plus prononcée et douce */
+            animation: fadeInScale 1s ease-out forwards; /* Nouvelle animation */
+            border: 1px solid rgba(255, 255, 255, 0.6); /* Bordure subtile */
+            max-width: 90%; /* S'assure que le container ne dépasse pas la largeur de l'écran */
+            box-sizing: border-box; /* Inclut le padding et la bordure dans la largeur/hauteur */
+        }
+        h1 {
+            color: #007bff; /* Maintien de la couleur bleue */
+            font-size: 3.5em; /* Taille de police légèrement augmentée */
+            margin-bottom: 25px; /* Marge inférieure augmentée */
+            font-weight: 600; /* Poids de police plus audacieux */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08); /* Ombre de texte plus douce */
+        }
+        p {
+            font-size: 1.4em; /* Taille de police légèrement augmentée */
+            color: #5b6e7f; /* Couleur de texte gris-bleu */
+            line-height: 1.6; /* Améliore la lisibilité */
+        }
+        /* Nouvelle animation pour un effet plus agréable */
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: translateY(-30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        /* Media queries pour une meilleure réactivité sur mobile */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 40px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            p {
+                font-size: 1.1em;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 25px;
+                margin: 15px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👋 Bienvenue sur votre App Azure !</h1>
+        <p>Cette application Java 11 est hébergée avec succès sur Azure Web Apps.</p>
+    </div>
+</body>
+</html>
+*/
